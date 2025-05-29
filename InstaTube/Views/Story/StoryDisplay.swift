@@ -9,7 +9,7 @@ import SwiftUI
 import AVKit
 
 struct StoryDisplay: View {
-    @State var player: AVPlayer?
+    @State private var player: AVPlayer?
     var story: Story
     
     var body: some View {
@@ -19,8 +19,8 @@ struct StoryDisplay: View {
         }
     }
     
-    var videoStory: some View {
-        VideoPlayer(avPlayer: $player)
+    private var videoStory: some View {
+        VideoPlayer(player: $player)
             .onAppear {
                 guard player == nil,
                       let url = URL(string: story.url) else { return }
@@ -33,7 +33,7 @@ struct StoryDisplay: View {
             .ignoresSafeArea()
     }
     
-    var imageStory: some View {
+    private var imageStory: some View {
         AsyncImage(url: URL(string: story.url)) { asyncImage in
             asyncImage
                 .image?

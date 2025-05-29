@@ -9,31 +9,35 @@ import SwiftUI
 import AVKit
 
 struct ShortView: View {
-    @State var avPlayer: AVPlayer?
-    @State var avPlayerLooper: AVPlayerLooper?
+    @State var player: AVPlayer?
+    @State var playerLooper: AVPlayerLooper?
     
     var short: Short
     
     var body: some View {
         GeometryReader { geometry in
-            VideoPlayer(avPlayer: $avPlayer)
+            VideoPlayer(player: $player)
                 .onAppear {
-                    guard avPlayer == nil else { return }
-                    guard let url = URL(string: short.url) else { return }
-                    avPlayer = loop(url: url)
-                    avPlayer?.play()
+                    guard player == nil,
+                          let url = URL(string: short.url) else { return }
+
+                    player = loop(url: url)
+                    player?.play()
                 }
                 .onDisappear {
-                    avPlayer = nil
+                    player = nil
                 }
         }
     }
-    
+}
+
+// Loop Video
+private extension ShortView {
     func loop(url: URL) -> AVQueuePlayer {
         let templateItem = AVPlayerItem(url: url)
-        let avPlayerQueue = AVQueuePlayer(playerItem: templateItem)
-        avPlayerLooper = AVPlayerLooper(player: avPlayerQueue, templateItem: templateItem)
-        return avPlayerQueue
+        let playerQueue = AVQueuePlayer(playerItem: templateItem)
+        playerLooper = AVPlayerLooper(player: playerQueue, templateItem: templateItem)
+        return playerQueue
     }
 }
 
