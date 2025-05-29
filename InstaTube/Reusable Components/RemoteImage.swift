@@ -26,6 +26,7 @@ struct RemoteImage: View {
                 .placeholder {
                     ProgressView()
                 }
+                .aspectRatio(contentMode: .fill)
                 .frame(width: size?.width, height: size?.height)
         } else {
             fallbackImage
