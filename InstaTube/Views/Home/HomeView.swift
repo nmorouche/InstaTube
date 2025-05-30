@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    @StateObject var viewModel: HomeViewModel = .init()
+    @Bindable var page: Page
     
     var body: some View {
         NavigationStack {
             VStack {
-                StoryListView()
+                StoryListView(page: page)
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 0) {
-                        ForEach($viewModel.shorts) { $short in
+                        ForEach($page.shorts) { $short in
                             ShortView(short: $short)
                                 .frame(maxWidth: .infinity)
                                 .containerRelativeFrame(.vertical)
@@ -36,5 +35,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(page: .fake)
 }

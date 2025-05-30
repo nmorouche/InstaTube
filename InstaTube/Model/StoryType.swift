@@ -5,7 +5,7 @@
 //  Created by Nassim Morouche on 29/05/2025.
 //
 
-enum StoryType {
-    case image
-    case video
+enum StoryType: String, Codable {
+    case image = "image"
+    case video = "video"
 }

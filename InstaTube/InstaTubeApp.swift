@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct InstaTubeApp: App {
+    @State private var page: Page = .fake
+
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            HomeView(page: page)
         }
+        .environment(page)
     }
 }

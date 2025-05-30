@@ -8,22 +8,17 @@
 import SwiftUI
 
 struct StoryListView: View {
-    
-    @StateObject private var viewModel: StoryListViewModel = .init(users:
-                                                                    [.fake1, .fake2, .fake3, .fake4]
-        .sorted(by: { $0.isStoryUnseen && !$1.isStoryUnseen })
-    )
+    @Bindable var page: Page
     
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(0..<viewModel.users.count, id: \.self) { userIndex in
+                ForEach($page.users) { $user in
                     NavigationLink {
-                        StoryView(tabIndex: userIndex)
-                            .environmentObject(viewModel)
+                        StoryView(page: $page, user: $user, tabIndex: page.users.firstIndex(of: user) ?? 0)
                     } label: {
-                        CircleImage(imageUrl: viewModel.users[userIndex].profilePictureUrl,
-                                    unseen: viewModel.users[userIndex].isStoryUnseen)
+                        CircleImage(imageUrl: user.profilePictureUrl,
+                                    unseen: user.isStoryUnseen)
                     }
                     .padding(.trailing, 5)
                 }
@@ -34,5 +29,5 @@ struct StoryListView: View {
 }
 
 #Preview {
-    StoryListView()
+    StoryListView(page: .fake)
 }

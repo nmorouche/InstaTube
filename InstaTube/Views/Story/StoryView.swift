@@ -8,35 +8,33 @@
 import SwiftUI
 
 struct StoryView: View {
+    @Bindable var page: Page
+    @Binding var user: User
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var storyListViewModel: StoryListViewModel
     @StateObject var viewModel: StoryViewModel
 
-    init(tabIndex: Int) {
+    init(page: Bindable<Page>, user: Binding<User>, tabIndex: Int) {
+        _page = page
+        _user = user
         _viewModel = StateObject(wrappedValue: StoryViewModel(tabIndex: tabIndex))
     }
         
     var body: some View {
         TabView(selection: $viewModel.tabIndex,
                 content:  {
-            ForEach(0..<storyListViewModel.users.count, id: \.self) { currentUserIndex in
+            ForEach($page.users) { $user in
                 GeometryReader { geometry in
-                    StoryContentView(currentUserIndex: currentUserIndex, users: $storyListViewModel.users, tabIndex: $viewModel.tabIndex, onNext: {
-                        withAnimation {
-                            viewModel.tabIndex += 1
-                        }
-                    }, onPrevious: {
-                        if viewModel.tabIndex != 0 {
+                    StoryContentView(
+                        page: $page,
+                        user: $user,
+                        tabIndex: $viewModel.tabIndex,
+                        onDismiss: {
                             withAnimation {
-                                viewModel.tabIndex -= 1
+                                dismiss()
                             }
                         }
-                    }, onDismiss: {
-                        withAnimation {
-                            dismiss()
-                        }
-                    })
-                    .tag(currentUserIndex)
+                    )
+                    .tag(user.id)
                     .rotation3DEffect(
                         angle(geometry: geometry),
                         axis: (x: 0.0, y: 1.0, z: 0.0),
@@ -62,6 +60,7 @@ struct StoryView: View {
 }
 
 #Preview {
-    StoryView(tabIndex: 2)
-        .environmentObject(StoryListViewModel(users: [.fake1, .fake2, .fake3]))
+    @Previewable
+    @Bindable var page: Page = .fake
+    StoryView(page: _page, user: .constant(.fake1), tabIndex: 2)
 }
