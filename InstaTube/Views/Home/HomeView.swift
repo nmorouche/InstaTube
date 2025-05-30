@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @StateObject var viewModel: HomeViewModel = .init()
+    
     var body: some View {
-        let shorts: [Short] = [.fake1, .fake2, .fake3]
         NavigationStack {
             VStack {
                 StoryListView()
-                Divider()
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 0) {
-                        ForEach(shorts) { short in
-                            ShortView(short: short)
+                        ForEach($viewModel.shorts) { $short in
+                            ShortView(short: $short)
                                 .frame(maxWidth: .infinity)
                                 .containerRelativeFrame(.vertical)
                         }

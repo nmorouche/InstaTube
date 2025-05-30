@@ -1,5 +1,5 @@
 //
-//  StoryDisplay.swift
+//  StoryMedia.swift
 //  InstaTube
 //
 //  Created by Nassim Morouche on 29/05/2025.
@@ -8,8 +8,8 @@
 import SwiftUI
 import AVKit
 
-struct StoryDisplay: View {
-    @State private var player: AVPlayer?
+struct StoryMedia: View {
+    @Binding var player: AVPlayer?
     var story: Story
     
     var body: some View {
@@ -24,6 +24,7 @@ struct StoryDisplay: View {
             .onAppear {
                 guard player == nil,
                       let url = URL(string: story.url) else { return }
+                
                 player = AVPlayer(url: url)
                 player?.play()
             }
@@ -34,12 +35,8 @@ struct StoryDisplay: View {
     }
     
     private var imageStory: some View {
-        AsyncImage(url: URL(string: story.url)) { asyncImage in
-            asyncImage
-                .image?
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .ignoresSafeArea()
-        }
+        RemoteImage(imageUrl: story.url)
+            .aspectRatio(contentMode: .fill)
+            .ignoresSafeArea()
     }
 }

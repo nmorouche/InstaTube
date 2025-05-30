@@ -9,35 +9,26 @@ import SwiftUI
 
 struct StoryListView: View {
     
-    @StateObject private var viewModel: StoryListViewModel = .init(pages: [.fake])
+    @StateObject private var viewModel: StoryListViewModel = .init(users:
+                                                                    [.fake1, .fake2, .fake3, .fake4]
+        .sorted(by: { $0.isStoryUnseen && !$1.isStoryUnseen })
+    )
     
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(0..<viewModel.pages.count, id: \.self) { pageIndex in
-                    ForEach(0..<viewModel.pages[pageIndex].users.count, id: \.self) { userIndex in
-                        if !viewModel.pages[pageIndex].users[userIndex].stories.isEmpty {
-                            NavigationLink {
-                                StoryView(pageIndex: pageIndex,
-                                          userIndex: userIndex,
-                                          pages: viewModel.pages,
-                                          onSeen: { storyIndex in
-                                    viewModel.pages[pageIndex].users[userIndex].stories[storyIndex].seen = true
-                                },
-                                          onLike: { storyIndex in
-                                    viewModel.pages[pageIndex].users[userIndex].stories[storyIndex].liked = !viewModel.pages[pageIndex].users[userIndex].stories[storyIndex].liked
-                                }
-                                )
-                            } label: {
-                                CircleImage(
-                                    imageUrl: viewModel.pages[pageIndex].users[userIndex].profilePictureUrl,
-                                    unseen: viewModel.pages[pageIndex].users[userIndex].stories.contains(where: { !$0.seen })
-                                )
-                            }
-                        }
+                ForEach(0..<viewModel.users.count, id: \.self) { userIndex in
+                    NavigationLink {
+                        StoryView(tabIndex: userIndex)
+                            .environmentObject(viewModel)
+                    } label: {
+                        CircleImage(imageUrl: viewModel.users[userIndex].profilePictureUrl,
+                                    unseen: viewModel.users[userIndex].isStoryUnseen)
                     }
+                    .padding(.trailing, 5)
                 }
             }
+            .padding(.horizontal, 10)
         }
     }
 }

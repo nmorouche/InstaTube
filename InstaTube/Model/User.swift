@@ -12,6 +12,10 @@ struct User: Identifiable {
     var name: String
     var profilePictureUrl: String
     var stories: [Story]
+    
+    var isStoryUnseen: Bool {
+        stories.contains(where: { !$0.seen })
+    }
 }
 
 extension User {
@@ -24,14 +28,10 @@ extension User {
     }
     
     static var fake3: User {
-        .init(name: "Test", profilePictureUrl: "https://images.unsplash.com/photo-1457449940276-e8deed18bfff?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", stories: [])
-    }
-    
-    static var fake4: User {
         .init(name: "Test", profilePictureUrl: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=2000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", stories: [.fakeWithSeen, .fakeWithVideo])
     }
     
-    static var fake5: User {
+    static var fake4: User {
         .init(name: "Test", profilePictureUrl: "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?q=80&w=2830&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", stories: [.fakeWithLike])
     }
 }

@@ -8,9 +8,9 @@
 import Foundation
 
 final class StoryListViewModel: ObservableObject {
-    @Published var pages: [Page]
+    @Published var users: [User]
     
-    init(pages: [Page]) {
-        self.pages = pages
+    init(users: [User]) {
+        self.users = users
     }
 }

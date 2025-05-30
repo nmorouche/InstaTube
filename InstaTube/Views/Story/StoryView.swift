@@ -9,30 +9,40 @@ import SwiftUI
 
 struct StoryView: View {
     @Environment(\.dismiss) var dismiss
-    var onSeen: ((Int) -> Void)?
-    var onLike: ((Int) -> Void)?
-    
+    @EnvironmentObject var storyListViewModel: StoryListViewModel
     @StateObject var viewModel: StoryViewModel
 
-    init(pageIndex: Int, userIndex: Int, pages: [Page], onSeen: ((Int) -> Void)?, onLike: ((Int) -> Void)?) {
-        _viewModel = StateObject(wrappedValue: StoryViewModel(pages: pages, pageIndex: pageIndex, userIndex: userIndex))
-        self.onSeen = onSeen
-        self.onLike = onLike
+    init(tabIndex: Int) {
+        _viewModel = StateObject(wrappedValue: StoryViewModel(tabIndex: tabIndex))
     }
         
     var body: some View {
-        TabView(selection: $viewModel.index,
+        TabView(selection: $viewModel.tabIndex,
                 content:  {
-            ForEach(0..<viewModel.pages[viewModel.pageIndex].users.count, id: \.self) { currentUserIndex in
+            ForEach(0..<storyListViewModel.users.count, id: \.self) { currentUserIndex in
                 GeometryReader { geometry in
-                    fullScreenStory
-                        .onTapGesture { location in
-                            let point = location.x
-                            let fullScreen = geometry.size.width
-                            let half = fullScreen / 2
-                            (point > half) ? viewModel.nextStory() : viewModel.previousStory()
+                    StoryContentView(currentUserIndex: currentUserIndex, users: $storyListViewModel.users, tabIndex: $viewModel.tabIndex, onNext: {
+                        withAnimation {
+                            viewModel.tabIndex += 1
                         }
-                        .tag(currentUserIndex)
+                    }, onPrevious: {
+                        if viewModel.tabIndex != 0 {
+                            withAnimation {
+                                viewModel.tabIndex -= 1
+                            }
+                        }
+                    }, onDismiss: {
+                        withAnimation {
+                            dismiss()
+                        }
+                    })
+                    .tag(currentUserIndex)
+                    .rotation3DEffect(
+                        angle(geometry: geometry),
+                        axis: (x: 0.0, y: 1.0, z: 0.0),
+                        anchor: geometry.frame(in: .global).minX > 0 ? .leading : .trailing,
+                        perspective: 2
+                    )
                 }
             }
         })
@@ -42,66 +52,16 @@ struct StoryView: View {
         .toolbar(.hidden)
     }
     
-    var fullScreenStory: some View {
-        VStack {
-            HStack {
-                ForEach(0..<viewModel.currentUser.stories.count, id: \.self) { index in
-                    if (index < viewModel.currentStoryIndex) {
-                        ProgressView(value: 1)
-                    } else if (index > viewModel.currentStoryIndex) {
-                        ProgressView(value: 0)
-                    } else {
-                        ProgressView(value: viewModel.progress)
-                    }
-                }
-            }
-            HStack(alignment: .center) {
-                CircleImage(imageUrl: viewModel.currentUser.profilePictureUrl)
-                Text(viewModel.currentUser.name)
-                Spacer()
-                Button("", systemImage: "xmark") {
-                    dismiss()
-                }
-                .tint(.gray)
-            }
-            Spacer()
-        }
-        .overlay {
-            fullScreenStoryOverlay
-        }
-        .padding()
-        .background(content: {
-            StoryDisplay(story: viewModel.currentStory)
-        })
-        .onAppear() {
-            onSeen?(viewModel.currentStoryIndex)
-            viewModel.duration = viewModel.currentStory.duration
-            viewModel.storyTimer()
-        }
-        .onChange(of: viewModel.shouldDismiss) {
-            dismiss()
-        }
-    }
-    
-    var fullScreenStoryOverlay: some View {
-        HStack(alignment: .bottom) {
-            Spacer()
-            VStack(alignment: .trailing,
-                   spacing: 32) {
-                Spacer()
-                Button("", systemImage: viewModel.currentStory.liked ? "heart.fill" : "heart", action: {
-                    onLike?(viewModel.currentStoryIndex)
-                })
-                .tint(viewModel.currentStory.liked ? .red : .black)
-                Button("", systemImage: "message", action: {})
-                Button("", systemImage: "paperplane", action: {})
-                Button("", systemImage: "list.bullet", action: {})
-            }.tint(.black)
-                .font(.title)
-        }
+    func angle(geometry: GeometryProxy) -> Angle {
+        let minX = geometry.frame(in: .global).minX
+        let globalSize = geometry.size.width
+        let rotationProgression = minX / globalSize
+        let degree = rotationProgression * 45
+        return Angle(degrees: degree)
     }
 }
 
 #Preview {
-    StoryView(pageIndex: 0, userIndex: 0, pages: [.fake], onSeen: nil, onLike: nil)
+    StoryView(tabIndex: 2)
+        .environmentObject(StoryListViewModel(users: [.fake1, .fake2, .fake3]))
 }
