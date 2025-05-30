@@ -15,7 +15,6 @@ struct HomeView: View {
         NavigationStack {
             VStack {
                 StoryListView()
-                Divider()
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 0) {
                         ForEach($viewModel.shorts) { $short in
