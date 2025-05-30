@@ -19,7 +19,6 @@ extension Page {
             .fake2,
             .fake3,
             .fake4,
-            .fake5
         ])
     }
 }

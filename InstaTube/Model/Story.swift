@@ -26,10 +26,10 @@ extension Story {
     }
     
     static var fakeWithSeen: Story {
-        .init(url: "https://blog.codabee.com/wp-content/uploads/2023/12/159557-720p.mp4", type: .video, duration: 20.0, seen: true, liked: false)
+        .init(url: "https://blog.codabee.com/wp-content/uploads/2023/12/170272-540p.mp4", type: .video, duration: 20.0, seen: true, liked: false)
     }
     
     static var fakeWithLike: Story {
-        .init(url: "https://blog.codabee.com/wp-content/uploads/2023/12/125483-720p.mp4", type: .video, duration: 5.0, seen: false, liked: true)
+        .init(url: "https://blog.codabee.com/wp-content/uploads/2023/12/170272-540p.mp4", type: .video, duration: 5.0, seen: true, liked: true)
     }
 }

@@ -12,7 +12,7 @@ struct ShortView: View {
     @State var player: AVPlayer?
     @State var playerLooper: AVPlayerLooper?
     
-    var short: Short
+    @Binding var short: Short
     
     var body: some View {
         GeometryReader { geometry in
@@ -26,6 +26,28 @@ struct ShortView: View {
                 }
                 .onDisappear {
                     player = nil
+                }
+                .overlay {
+                    HStack(alignment: .center) {
+                        Spacer()
+                        VStack(alignment: .trailing,
+                               spacing: 32) {
+                            Spacer()
+                            Button {
+                                withAnimation {
+                                    short.liked = !short.liked
+                                }
+                            } label: {
+                                Image(systemName: short.liked ? "heart.fill" : "heart")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 25, height: 25)
+                            }
+                        }
+                               .padding(.bottom, 50)
+                               .padding(.trailing, 25)
+                               .tint(.gray)
+                    }
                 }
         }
     }
@@ -42,5 +64,5 @@ private extension ShortView {
 }
 
 #Preview {
-    ShortView(short: .fake1)
+    ShortView(short: .constant(.fake1))
 }
