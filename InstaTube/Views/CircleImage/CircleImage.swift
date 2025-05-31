@@ -16,7 +16,7 @@ struct CircleImage: View {
         ZStack {
             RemoteImage(imageUrl: imageUrl, size: size)
                 .frame(width: size.width, height: size.height)
-                .background(.secondary)
+                .background(.gray)
                 .clipShape(Circle())
             
             Circle()

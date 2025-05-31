@@ -16,6 +16,7 @@ struct StoryListView: View {
                 ForEach($page.users) { $user in
                     NavigationLink {
                         StoryView(page: $page, user: $user, tabIndex: page.users.firstIndex(of: user) ?? 0)
+                            .ignoresSafeArea()
                     } label: {
                         CircleImage(imageUrl: user.profilePictureUrl,
                                     unseen: user.isStoryUnseen)

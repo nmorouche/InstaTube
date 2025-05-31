@@ -14,6 +14,7 @@ struct InstaTubeApp: App {
 
     init() {
         Locator.register(StoryServiceProtocol.self, mode: .newInstance) { StoryService() }
+        Locator.register(ShortServiceProtocol.self, mode: .newInstance) { ShortService() }
     }
     
     var body: some Scene {
