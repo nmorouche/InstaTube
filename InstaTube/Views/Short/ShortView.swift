@@ -9,10 +9,9 @@ import SwiftUI
 import AVKit
 
 struct ShortView: View {
+    @Binding var short: Short
     @State var player: AVPlayer?
     @State var playerLooper: AVPlayerLooper?
-    
-    @Binding var short: Short
     
     var body: some View {
         GeometryReader { geometry in

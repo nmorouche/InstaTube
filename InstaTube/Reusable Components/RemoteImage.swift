@@ -21,7 +21,7 @@ struct RemoteImage: View {
                 .resizable()
                 .cancelOnDisappear(true)
                 .onFailure { [] error in
-                    print("Error parsing the image (use a real Logger in a real app, never print in the console)")
+                    print("❌ KingFisher - Error parsing the image: \n\(error)")
                 }
                 .placeholder {
                     ProgressView()

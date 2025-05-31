@@ -8,20 +8,22 @@
 import Foundation
 
 final class StoryContentViewModel: ObservableObject {
-    var currentUserIndex: Int
-    var usersCount: Int = 0
-    var storiesCount: Int = 0
+    var currentUserIndex: Int = 0
+    var usersCount: Int
+    var storiesCount: Int
     @Published var currentStory: Int = 0
     @Published var timer: Timer?
     @Published var progress: CGFloat = 0
     @Published var timeSpent: CGFloat = 0
     @Published var duration: CGFloat = 0
-    @Published var shouldTriggerOnNextAction: Bool = false
-    @Published var shouldTriggerOnPreviousAction: Bool = false
+    @Published var shouldTriggerOnNextStory: Bool = false
+    @Published var shouldTriggerOnPreviousStory: Bool = false
     @Published var shouldDismiss: Bool = false
     
-    init(currentUserIndex: Int) {
+    init(currentUserIndex: Int, usersCount: Int, storiesCount: Int) {
         self.currentUserIndex = currentUserIndex
+        self.usersCount = usersCount
+        self.storiesCount = storiesCount
     }
     
     func useTimer() {
@@ -43,7 +45,7 @@ final class StoryContentViewModel: ObservableObject {
             currentStory += 1
             useTimer()
         } else if currentUserIndex < usersCount - 1 {
-            shouldTriggerOnNextAction = true
+            shouldTriggerOnNextStory = true
         } else {
             shouldDismiss = true
         }
@@ -57,7 +59,7 @@ final class StoryContentViewModel: ObservableObject {
             currentStory -= 1
             useTimer()
         } else if currentUserIndex > 0 {
-            shouldTriggerOnPreviousAction = true
+            shouldTriggerOnPreviousStory = true
         } else {
             currentStory = 0
             useTimer()

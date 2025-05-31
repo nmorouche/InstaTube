@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E8BB84D2DEA3E49006BDFF3 /* Injector in Frameworks */ = {isa = PBXBuildFile; productRef = 5E8BB84C2DEA3E49006BDFF3 /* Injector */; };
+		5E8BB8552DEA3E9D006BDFF3 /* Injector in Frameworks */ = {isa = PBXBuildFile; productRef = 5E8BB8542DEA3E9D006BDFF3 /* Injector */; };
+		5E8BB8582DEA3F8A006BDFF3 /* Injector in Frameworks */ = {isa = PBXBuildFile; productRef = 5E8BB8572DEA3F8A006BDFF3 /* Injector */; };
+		5E8BB85B2DEA3F9A006BDFF3 /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = 5E8BB85A2DEA3F9A006BDFF3 /* NetworkService */; };
 		5E8D31892DE8AEE700B37CA8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5E8D31882DE8AEE700B37CA8 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E8BB85C2DEA638A006BDFF3 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../MyPlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5E8D31162DE8893C00B37CA8 /* InstaTube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaTube.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8D31232DE8893D00B37CA8 /* InstaTubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstaTubeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8D312D2DE8893D00B37CA8 /* InstaTubeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstaTubeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +56,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E8BB8552DEA3E9D006BDFF3 /* Injector in Frameworks */,
+				5E8BB84D2DEA3E49006BDFF3 /* Injector in Frameworks */,
+				5E8BB85B2DEA3F9A006BDFF3 /* NetworkService in Frameworks */,
+				5E8BB8582DEA3F8A006BDFF3 /* Injector in Frameworks */,
 				5E8D31892DE8AEE700B37CA8 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +84,7 @@
 		5E8D310D2DE8893C00B37CA8 = {
 			isa = PBXGroup;
 			children = (
+				5E8BB85C2DEA638A006BDFF3 /* MyPlayground.playground */,
 				5E8D31182DE8893C00B37CA8 /* InstaTube */,
 				5E8D31262DE8893D00B37CA8 /* InstaStoryTests */,
 				5E8D31172DE8893C00B37CA8 /* Products */,
@@ -112,6 +122,10 @@
 			name = InstaTube;
 			packageProductDependencies = (
 				5E8D31882DE8AEE700B37CA8 /* Kingfisher */,
+				5E8BB84C2DEA3E49006BDFF3 /* Injector */,
+				5E8BB8542DEA3E9D006BDFF3 /* Injector */,
+				5E8BB8572DEA3F8A006BDFF3 /* Injector */,
+				5E8BB85A2DEA3F9A006BDFF3 /* NetworkService */,
 			);
 			productName = InstaStory;
 			productReference = 5E8D31162DE8893C00B37CA8 /* InstaTube.app */;
@@ -194,6 +208,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5E8D31872DE8AEE700B37CA8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				5E8BB8562DEA3F8A006BDFF3 /* XCLocalSwiftPackageReference "Packages/Injector" */,
+				5E8BB8592DEA3F9A006BDFF3 /* XCLocalSwiftPackageReference "Packages/NetworkService" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5E8D31172DE8893C00B37CA8 /* Products */;
@@ -557,6 +573,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		5E8BB8562DEA3F8A006BDFF3 /* XCLocalSwiftPackageReference "Packages/Injector" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Injector;
+		};
+		5E8BB8592DEA3F9A006BDFF3 /* XCLocalSwiftPackageReference "Packages/NetworkService" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/NetworkService;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		5E8D31872DE8AEE700B37CA8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -569,6 +596,22 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5E8BB84C2DEA3E49006BDFF3 /* Injector */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Injector;
+		};
+		5E8BB8542DEA3E9D006BDFF3 /* Injector */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Injector;
+		};
+		5E8BB8572DEA3F8A006BDFF3 /* Injector */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Injector;
+		};
+		5E8BB85A2DEA3F9A006BDFF3 /* NetworkService */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkService;
+		};
 		5E8D31882DE8AEE700B37CA8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5E8D31872DE8AEE700B37CA8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
