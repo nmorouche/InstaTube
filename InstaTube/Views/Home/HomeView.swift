@@ -13,8 +13,7 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
-                StoryListView(page: page)
+            ZStack {
                 ScrollView(.vertical) {
                     LazyVStack(spacing: 0) {
                         ForEach($page.shorts) { $short in
@@ -26,8 +25,17 @@ struct HomeView: View {
                 }
                 .scrollIndicators(.hidden)
                 .scrollTargetBehavior(.paging)
-                .background(.black)
+                .background(.black.opacity(0.7))
                 .ignoresSafeArea()
+                
+                VStack(alignment: .center) {
+                    StoryListView(page: page)
+                        .padding(.vertical)
+                        .background(.white.opacity(0.8))
+                        .clipShape(Capsule())
+                    Spacer()
+                }
+                .padding(.horizontal, 5)
             }
             .task {
                 if let page = await viewModel.fetchStories() {
@@ -36,6 +44,7 @@ struct HomeView: View {
                     self.page.sortUsersByStoryUnseen()
                 }
             }
+            .navigationBarHidden(true)
             .navigationTitle("InstaTube")
             .navigationBarTitleDisplayMode(.inline)
         }

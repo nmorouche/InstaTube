@@ -48,16 +48,23 @@ struct StoryContentView: View {
                     CircleImage(imageUrl: user.profilePictureUrl)
                     Text(user.name)
                     Spacer()
-                    Button("", systemImage: "xmark") {
+                    Button {
                         onDismiss?()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
                     }
                     .tint(.gray)
                 }
                 Spacer()
             }
-            .padding()
+            .padding(.top, 50)
+            .padding(.horizontal)
             .background(content: {
                 StoryMedia(player: $player, story: user.stories[viewModel.currentStory])
+                    .ignoresSafeArea()
             })
             .overlay {
                 HStack(alignment: .center) {

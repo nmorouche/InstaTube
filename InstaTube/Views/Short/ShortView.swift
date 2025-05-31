@@ -48,6 +48,7 @@ struct ShortView: View {
                                .tint(.gray)
                     }
                 }
+                .cornerRadius(50)
         }
     }
 }

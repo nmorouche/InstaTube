@@ -45,9 +45,10 @@ struct StoryView: View {
             }
         })
         .tabViewStyle(.page(indexDisplayMode: .never))
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .transition(.move(edge: .bottom))
+        .transition(.move(edge: .trailing))
         .toolbar(.hidden)
+        .statusBarHidden()
+        .ignoresSafeArea()
     }
     
     func angle(geometry: GeometryProxy) -> Angle {
