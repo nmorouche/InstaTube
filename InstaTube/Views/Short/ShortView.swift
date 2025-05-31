@@ -15,6 +15,7 @@ struct ShortView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            let frame = geometry.frame(in: .scrollView(axis: .vertical))
             VideoPlayer(player: $player)
                 .onAppear {
                     guard player == nil,
@@ -26,6 +27,10 @@ struct ShortView: View {
                 .onDisappear {
                     player = nil
                 }
+                .preference(key: ViewOffsetPreferenceKey.self, value: frame)
+                .onPreferenceChange(ViewOffsetPreferenceKey.self, perform: { value in
+                    shouldPlayVideo(value: value) ? player?.play() : player?.pause()
+                })
                 .overlay {
                     HStack(alignment: .center) {
                         Spacer()
@@ -55,6 +60,14 @@ struct ShortView: View {
 
 // Loop Video
 private extension ShortView {
+    func shouldPlayVideo(value: CGRect) -> Bool {
+        let minPositive = value.minY
+        let minNegative = -value.minY
+        let half = value.height / 2
+        let isVisible = (minPositive < half) && (minNegative < half)
+        return isVisible
+    }
+    
     func loop(url: URL) -> AVQueuePlayer {
         let templateItem = AVPlayerItem(url: url)
         let playerQueue = AVQueuePlayer(playerItem: templateItem)

@@ -34,6 +34,7 @@ struct StoryView: View {
                             }
                         }
                     )
+                    .cornerRadius(50)
                     .tag(user.id)
                     .rotation3DEffect(
                         angle(geometry: geometry),
