@@ -35,6 +35,10 @@ final class Page: Identifiable, Codable {
         try container.encode(users, forKey: .users)
         try container.encode(shorts, forKey: .shorts)
     }
+    
+    func sortUsersByStoryUnseen() {
+        users.sort(by: { $0.isStoryUnseen && !$1.isStoryUnseen })
+    }
 }
 
 extension Page {

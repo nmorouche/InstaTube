@@ -69,6 +69,11 @@ struct StoryContentView: View {
                             withAnimation {
                                 user.stories[viewModel.currentStory].liked = !user.stories[viewModel.currentStory].liked
                             }
+                            
+                            Task {
+                                let result = await viewModel.likeStory(userId: user.id, storyId: user.stories[viewModel.currentStory].id)
+                                user.stories[viewModel.currentStory].liked = result
+                            }
                         } label: {
                             Image(systemName: user.stories[viewModel.currentStory].liked ? "heart.fill" : "heart")
                                 .resizable()
@@ -83,6 +88,12 @@ struct StoryContentView: View {
             }
             .onAppear {
                 user.stories[viewModel.currentStory].seen = true
+                Task {
+                    let result = await viewModel.seenStory(userId: user.id, storyId: user.stories[viewModel.currentStory].id)
+                    user.stories[viewModel.currentStory].seen = result
+                    page.sortUsersByStoryUnseen()
+                }
+                
                 viewModel.duration = page.users[viewModel.currentUserIndex].stories[viewModel.currentStory].duration
                 viewModel.useTimer()
             }
@@ -92,6 +103,11 @@ struct StoryContentView: View {
                 let half = fullScreen / 2
                 point > half ? viewModel.nextStory() : viewModel.previousStory()
                 user.stories[viewModel.currentStory].seen = true
+                Task {
+                    let result = await viewModel.seenStory(userId: user.id, storyId: user.stories[viewModel.currentStory].id)
+                    user.stories[viewModel.currentStory].seen = result
+                    page.sortUsersByStoryUnseen()
+                }
                 player?.replaceCurrentItem(with: AVPlayerItem(url: URL(string: user.stories[viewModel.currentStory].url)!))
             }
             .onChange(of: viewModel.shouldTriggerOnNextStory) { oldValue, newValue in

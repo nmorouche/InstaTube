@@ -34,8 +34,7 @@ extension StoryAPI: Service {
         switch self {
         case .getStories:
             return .get
-        case .like(_, _),
-                .seen(_, _):
+        case .like, .seen:
             return .patch
         }
     }

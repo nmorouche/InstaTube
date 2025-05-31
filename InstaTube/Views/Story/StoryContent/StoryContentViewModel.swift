@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Injector
 
 final class StoryContentViewModel: ObservableObject {
     var currentUserIndex: Int = 0
@@ -19,6 +20,8 @@ final class StoryContentViewModel: ObservableObject {
     @Published var shouldTriggerOnNextStory: Bool = false
     @Published var shouldTriggerOnPreviousStory: Bool = false
     @Published var shouldDismiss: Bool = false
+    
+    @Inject var storyService: StoryServiceProtocol
     
     init(currentUserIndex: Int, usersCount: Int, storiesCount: Int) {
         self.currentUserIndex = currentUserIndex
@@ -64,5 +67,31 @@ final class StoryContentViewModel: ObservableObject {
             currentStory = 0
             useTimer()
         }
+    }
+    
+    @MainActor
+    func likeStory(userId: Int, storyId: Int) async -> Bool {
+        let result = await storyService.likeStory(userId: userId, storyId: storyId)
+        switch result {
+        case .success(let success):
+            return success
+        case .failure(let error):
+            print("Error liking story: \n\(error.localizedDescription)")
+        }
+        
+        return false
+    }
+    
+    @MainActor
+    func seenStory(userId: Int, storyId: Int) async -> Bool {
+        let result = await storyService.seenStory(userId: userId, storyId: storyId)
+        switch result {
+        case .success(let success):
+            return success
+        case .failure(let error):
+            print("Error liking story: \n\(error.localizedDescription)")
+        }
+        
+        return false
     }
 }

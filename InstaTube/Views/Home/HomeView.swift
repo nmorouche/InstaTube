@@ -33,6 +33,7 @@ struct HomeView: View {
                 if let page = await viewModel.fetchStories() {
                     self.page.users = page.users
                     self.page.shorts = page.shorts
+                    self.page.sortUsersByStoryUnseen()
                 }
             }
             .navigationTitle("InstaTube")
