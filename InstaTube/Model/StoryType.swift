@@ -6,6 +6,6 @@
 //
 
 enum StoryType: String, Codable {
-    case image = "image"
-    case video = "video"
+    case image
+    case video
 }

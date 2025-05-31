@@ -11,6 +11,11 @@ struct Short: Identifiable, Codable, Hashable {
     var id: Int
     var url: String
     var liked: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case id, liked
+        case url = "media_url"
+    }
 }
 
 extension Short {

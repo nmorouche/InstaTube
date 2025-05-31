@@ -14,6 +14,11 @@ struct Story: Identifiable, Codable {
     var duration: Double
     var seen: Bool
     var liked: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case id, type, duration, seen, liked
+        case url = "media_url"
+    }
 }
 
 extension Story {

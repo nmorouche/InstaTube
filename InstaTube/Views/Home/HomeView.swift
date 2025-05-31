@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Bindable var page: Page
+    @StateObject var viewModel: HomeViewModel = .init()
     
     var body: some View {
         NavigationStack {
@@ -27,6 +28,12 @@ struct HomeView: View {
                 .scrollTargetBehavior(.paging)
                 .background(.black)
                 .ignoresSafeArea()
+            }
+            .task {
+                if let page = await viewModel.fetchStories() {
+                    self.page.users = page.users
+                    self.page.shorts = page.shorts
+                }
             }
             .navigationTitle("InstaTube")
             .navigationBarTitleDisplayMode(.inline)

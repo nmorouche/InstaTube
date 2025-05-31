@@ -25,6 +25,7 @@ struct StoryListView: View {
             }
             .padding(.horizontal, 10)
         }
+        .scrollIndicators(.hidden)
     }
 }
 
