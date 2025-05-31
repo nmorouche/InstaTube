@@ -79,7 +79,9 @@ struct StoryContentView: View {
                             
                             Task {
                                 let result = await viewModel.likeStory(userId: user.id, storyId: user.stories[viewModel.currentStory].id)
-                                user.stories[viewModel.currentStory].liked = result
+                                if !result {
+                                    user.stories[viewModel.currentStory].liked = !user.stories[viewModel.currentStory].liked
+                                }
                             }
                         } label: {
                             Image(systemName: user.stories[viewModel.currentStory].liked ? "heart.fill" : "heart")
@@ -97,7 +99,9 @@ struct StoryContentView: View {
                 user.stories[viewModel.currentStory].seen = true
                 Task {
                     let result = await viewModel.seenStory(userId: user.id, storyId: user.stories[viewModel.currentStory].id)
-                    user.stories[viewModel.currentStory].seen = result
+                    if !result {
+                        user.stories[viewModel.currentStory].seen = !user.stories[viewModel.currentStory].seen
+                    }
                     page.sortUsersByStoryUnseen()
                 }
                 
@@ -112,7 +116,9 @@ struct StoryContentView: View {
                 user.stories[viewModel.currentStory].seen = true
                 Task {
                     let result = await viewModel.seenStory(userId: user.id, storyId: user.stories[viewModel.currentStory].id)
-                    user.stories[viewModel.currentStory].seen = result
+                    if !result {
+                        user.stories[viewModel.currentStory].seen = !user.stories[viewModel.currentStory].seen
+                    }
                     page.sortUsersByStoryUnseen()
                 }
                 player?.replaceCurrentItem(with: AVPlayerItem(url: URL(string: user.stories[viewModel.currentStory].url)!))

@@ -13,6 +13,8 @@ struct ShortView: View {
     @State var player: AVPlayer?
     @State var playerLooper: AVPlayerLooper?
     
+    @StateObject var viewModel: ShortViewModel = .init()
+    
     var body: some View {
         GeometryReader { geometry in
             let frame = geometry.frame(in: .scrollView(axis: .vertical))
@@ -41,6 +43,14 @@ struct ShortView: View {
                                 withAnimation {
                                     short.liked = !short.liked
                                 }
+                                
+                                Task {
+                                    let result = await viewModel.likeShort(shortId: short.id)
+                                    if !result {
+                                        short.liked = !short.liked
+                                    }
+                                }
+                                
                             } label: {
                                 Image(systemName: short.liked ? "heart.fill" : "heart")
                                     .resizable()
