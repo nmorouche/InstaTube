@@ -2,6 +2,7 @@
 
 **InstaTube** is a modern mobile application that merges the immersive *Story* experience of Instagram with the engaging vertical video content of *YouTube Shorts* and *TikTok*.
 Powered by the [InstaTube API](https://github.com/nmorouche/InstaTube-api), InstaTube provides a seamless, dynamic, and interactive way to explore short-form media content.
+(This is a personal project aimed at improving my iOS development skills.)
 
 ---
 
